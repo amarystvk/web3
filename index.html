@@ -64,21 +64,6 @@
       transform: scale(1.05);
     }
 
-    .orbit-group {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 400px;
-      height: 400px;
-      margin-left: -200px;
-      margin-top: -200px;
-      animation: rotate 60s linear infinite;
-    }
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
     .icon-orbit {
       position: absolute;
       width: 60px;
@@ -89,9 +74,8 @@
       justify-content: center;
       align-items: center;
       text-decoration: none;
-      transition: 0.3s;
       color: white;
-      box-shadow: 0 0 8px transparent;
+      transition: 0.3s;
     }
     .icon-orbit:hover {
       color: #00ffff;
@@ -112,6 +96,7 @@
       height: 100%;
       top: 0; left: 0;
       z-index: 1;
+      pointer-events: none;
     }
 
     .modal {
@@ -167,30 +152,28 @@
       <img id="profilePic" src="photo.jpg" class="center-image" />
     </div>
 
-    <!-- Orbits -->
-    <div class="orbit-group">
-      <a class="icon-orbit" id="resumeLink" href="https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE" target="_blank" style="top: 0%; left: 50%;">
-        <i class="fas fa-file-alt"></i><div class="tooltip">Resume</div>
-      </a>
-      <a class="icon-orbit" href="https://t.me/undead_tvk" target="_blank" style="top: 15%; left: 15%;">
-        <i class="fab fa-telegram"></i><div class="tooltip">Telegram</div>
-      </a>
-      <a class="icon-orbit" href="mailto:amarystvk@gmail.com" style="top: 15%; left: 85%;">
-        <i class="fas fa-envelope"></i><div class="tooltip">Email</div>
-      </a>
-      <a class="icon-orbit" href="https://www.instagram.com/undeadtvk" target="_blank" style="top: 50%; left: 90%;">
-        <i class="fab fa-instagram"></i><div class="tooltip">Instagram</div>
-      </a>
-      <a class="icon-orbit" href="https://www.linkedin.com/in/sergey-gerasimenko-0836a7173/" target="_blank" style="top: 85%; left: 75%;">
-        <i class="fab fa-linkedin"></i><div class="tooltip">LinkedIn</div>
-      </a>
-      <a class="icon-orbit" href="https://wa.me/380634105441" target="_blank" style="top: 85%; left: 25%;">
-        <i class="fab fa-whatsapp"></i><div class="tooltip">WhatsApp</div>
-      </a>
-      <a class="icon-orbit" href="viber://chat?number=+380634105441" style="top: 50%; left: 10%;">
-        <i class="fab fa-viber"></i><div class="tooltip">Viber</div>
-      </a>
-    </div>
+    <!-- Icons (Static layout) -->
+    <a class="icon-orbit" id="resumeLink" href="https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE" target="_blank" style="top: 5%; left: 50%;">
+      <i class="fas fa-file-alt"></i><div class="tooltip">Resume</div>
+    </a>
+    <a class="icon-orbit" href="https://t.me/undead_tvk" target="_blank" style="top: 20%; left: 15%;">
+      <i class="fab fa-telegram"></i><div class="tooltip">Telegram</div>
+    </a>
+    <a class="icon-orbit" href="mailto:amarystvk@gmail.com" style="top: 20%; left: 85%;">
+      <i class="fas fa-envelope"></i><div class="tooltip">Email</div>
+    </a>
+    <a class="icon-orbit" href="https://www.instagram.com/undeadtvk" target="_blank" style="top: 55%; left: 90%;">
+      <i class="fab fa-instagram"></i><div class="tooltip">Instagram</div>
+    </a>
+    <a class="icon-orbit" href="https://www.linkedin.com/in/sergey-gerasimenko-0836a7173/" target="_blank" style="top: 80%; left: 70%;">
+      <i class="fab fa-linkedin"></i><div class="tooltip">LinkedIn</div>
+    </a>
+    <a class="icon-orbit" href="https://wa.me/380634105441" target="_blank" style="top: 80%; left: 30%;">
+      <i class="fab fa-whatsapp"></i><div class="tooltip">WhatsApp</div>
+    </a>
+    <a class="icon-orbit" href="viber://chat?number=+380634105441" style="top: 55%; left: 10%;">
+      <i class="fab fa-viber"></i><div class="tooltip">Viber</div>
+    </a>
   </div>
 
   <!-- Modal -->

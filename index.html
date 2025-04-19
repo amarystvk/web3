@@ -4,17 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sergii Gerasymenko</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       font-family: 'Segoe UI', sans-serif;
+      background: #000;
+      color: white;
       overflow: hidden;
-      position: relative;
     }
-
-    video.bg-video {
+    video#bgVideo {
       position: fixed;
       right: 0;
       bottom: 0;
@@ -22,192 +21,178 @@
       min-height: 100%;
       z-index: -1;
       object-fit: cover;
-      filter: brightness(0.3);
+    }
+    .language-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 2;
+    }
+    .language-switch button {
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: 1px solid #fff;
+      padding: 5px 10px;
+      cursor: pointer;
     }
 
-    .center-circle {
+    .center {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .profile-pic {
       width: 160px;
       height: 160px;
       border-radius: 50%;
-      overflow: hidden;
       border: 4px solid white;
-      z-index: 2;
-    }
-
-    .center-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
       cursor: pointer;
     }
-
-    .link-icon {
+    .orbit {
       position: absolute;
-      width: 60px;
-      height: 60px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      width: 320px;
+      height: 320px;
+      margin-left: -160px;
+      margin-top: -160px;
+      animation: rotate 20s linear infinite;
+    }
+    .orbit a {
+      position: absolute;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      width: 64px;
+      height: 64px;
+      background: rgba(255,255,255,0.1);
       color: white;
+      border-radius: 50%;
+      font-size: 18px;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: transform 0.3s, background 0.3s;
     }
-
-    .link-icon i {
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-
-    .link-icon:hover {
+    .orbit a:hover {
       transform: scale(1.2);
-      background: rgba(0,255,255,0.2);
+      background: rgba(255,255,255,0.3);
     }
-
-    .link-icon span {
+    .orbit a span {
+      margin-top: 4px;
       font-size: 11px;
-      text-align: center;
     }
 
-    .neuron-line {
-      position: absolute;
-      width: 2px;
-      height: 80px;
-      background: rgba(255, 255, 255, 0.2);
-      transform-origin: bottom center;
-      top: 50%;
-      left: 50%;
-      z-index: 1;
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .modal {
       display: none;
       position: fixed;
-      z-index: 10;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.9);
+      z-index: 5;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.8);
     }
-
-    .modal-content img {
-      max-width: 90vw;
-      max-height: 90vh;
-      display: block;
+    .modal-content {
       margin: 5% auto;
-      border-radius: 1rem;
+      display: block;
+      max-width: 90%;
+      border-radius: 12px;
     }
-
     .close {
       position: absolute;
       top: 20px;
-      right: 35px;
+      right: 40px;
+      color: white;
       font-size: 40px;
       font-weight: bold;
-      color: white;
       cursor: pointer;
     }
 
-    .lang-switch {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      z-index: 10;
+    .lines {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 320px; height: 320px;
+      margin-left: -160px;
+      margin-top: -160px;
+      pointer-events: none;
+      z-index: 0;
     }
-
-    .lang-switch button {
+    .lines::before, .lines::after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 320px;
       background: rgba(255,255,255,0.1);
-      color: white;
-      border: 1px solid white;
-      margin-left: 5px;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 5px;
+      left: 50%;
+      top: 0;
     }
-
-    .lang-switch button:hover {
-      background: rgba(0,255,255,0.2);
+    .lines::after {
+      transform: rotate(90deg);
+      transform-origin: center;
     }
   </style>
 </head>
 <body>
 
-<video autoplay muted loop class="bg-video">
+<video autoplay muted loop id="bgVideo">
   <source src="background.mp4" type="video/mp4">
 </video>
 
-<div class="center-circle" id="profilePic">
-  <img src="photo.jpg" alt="Sergii Gerasymenko" />
+<div class="language-switch">
+  <button onclick="switchLang('en')">EN</button>
+  <button onclick="switchLang('ua')">UA</button>
 </div>
 
-<!-- Языковое переключение -->
-<div class="lang-switch">
-  <button onclick="window.open('https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE', '_blank')">EN</button>
-  <button onclick="window.open('https://docs.google.com/document/d/107SPPT9hzH90HV0BpCLM_RgeNrB3Y9raCsogWVi9bmM', '_blank')">UA</button>
+<div class="center">
+  <img src="photo.jpg" class="profile-pic" id="profilePic" alt="Profile" onclick="openModal()">
 </div>
 
-<!-- Lines -->
+<div class="orbit" id="iconOrbit">
+  <a id="resumeLink" href="https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE" target="_blank">
+    <i class="fas fa-file-alt"></i><span id="resumeText">Resume</span>
+  </a>
+  <a href="mailto:amarystvk@gmail.com"><i class="fas fa-envelope"></i><span>Email</span></a>
+  <a href="https://t.me/undead_tvk" target="_blank"><i class="fab fa-telegram"></i><span>Telegram</span></a>
+  <a href="https://www.instagram.com/undeadtvk" target="_blank"><i class="fab fa-instagram"></i><span>Instagram</span></a>
+  <a href="https://www.linkedin.com/in/sergey-gerasimenko-0836a7173/" target="_blank"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
+  <a href="https://wa.me/380634105441" target="_blank"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+  <a href="viber://chat?number=+380634105441"><i class="fab fa-viber"></i><span>Viber</span></a>
+</div>
+
+<div class="lines"></div>
+
+<div id="modal" class="modal" onclick="closeModal()">
+  <span class="close" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImg" src="photo.jpg" alt="Full">
+</div>
+
 <script>
-  const totalIcons = 8;
-  for (let i = 0; i < totalIcons; i++) {
-    const line = document.createElement("div");
-    line.className = "neuron-line";
-    line.style.transform = `translate(-50%, -100%) rotate(${(360 / totalIcons) * i}deg)`;
-    document.body.appendChild(line);
+  function openModal() {
+    document.getElementById("modal").style.display = "block";
   }
-</script>
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
 
-<!-- Links -->
-<script>
-  const icons = [
-    { icon: "fas fa-file-alt", label: "Resume", link: "https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE" },
-    { icon: "fas fa-envelope", label: "Email", link: "mailto:amarystvk@gmail.com" },
-    { icon: "fab fa-telegram", label: "Telegram", link: "https://t.me/undead_tvk" },
-    { icon: "fab fa-linkedin", label: "LinkedIn", link: "https://www.linkedin.com/in/sergey-gerasimenko-0836a7173/" },
-    { icon: "fab fa-instagram", label: "Instagram", link: "https://www.instagram.com/undeadtvk" },
-    { icon: "fab fa-viber", label: "Viber", link: "viber://chat?number=%2B380634105441" },
-    { icon: "fab fa-whatsapp", label: "WhatsApp", link: "https://wa.me/380634105441" },
-    { icon: "fas fa-globe", label: "UA Resume", link: "https://docs.google.com/document/d/107SPPT9hzH90HV0BpCLM_RgeNrB3Y9raCsogWVi9bmM" }
-  ];
+  function switchLang(lang) {
+    const resumeLink = document.getElementById("resumeLink");
+    const resumeText = document.getElementById("resumeText");
 
-  icons.forEach((item, i) => {
-    const el = document.createElement("a");
-    el.href = item.link;
-    el.className = "link-icon";
-    el.style.transform = `translate(-50%, -50%) rotate(${(360 / icons.length) * i}deg) translate(180px) rotate(-${(360 / icons.length) * i}deg)`;
-    el.target = "_blank";
-    el.innerHTML = `<i class="${item.icon}"></i><span>${item.label}</span>`;
-    document.body.appendChild(el);
-  });
-</script>
-
-<!-- Modal -->
-<div id="modal" class="modal">
-  <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
-  <div class="modal-content">
-    <img src="photo.jpg" alt="Sergii Gerasymenko Large View">
-  </div>
-</div>
-
-<script>
-  const profilePic = document.getElementById('profilePic');
-  const modal = document.getElementById('modal');
-  profilePic.addEventListener('click', () => {
-    modal.style.display = 'block';
-  });
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = 'none';
+    if (lang === "ua") {
+      resumeText.innerText = "Резюме";
+      resumeLink.href = "https://docs.google.com/document/d/107SPPT9hzH90HV0BpCLM_RgeNrB3Y9raCsogWVi9bmM";
+    } else {
+      resumeText.innerText = "Resume";
+      resumeLink.href = "https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE";
     }
-  };
+  }
 </script>
 
 </body>

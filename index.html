@@ -3,222 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sergii Gerasymenko | Web3</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <title>Sergii Gerasymenko</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      overflow: hidden;
+
+    body {
       font-family: 'Segoe UI', sans-serif;
-      color: white;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* Фон-видео */
-    #bg-video {
+    video.bg-video {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      object-fit: cover;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
       z-index: -1;
+      object-fit: cover;
+      filter: brightness(0.3);
     }
 
-    .center {
+    .center-circle {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 10;
-    }
-
-    .profile-pic {
-      width: 140px;
-      height: 140px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
-      border: 4px solid #fff;
-      cursor: pointer;
-      transition: transform 0.3s;
+      overflow: hidden;
+      border: 4px solid white;
+      z-index: 2;
     }
 
-    .profile-pic:hover {
-      transform: scale(1.05);
+    .center-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .link-icon {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .link-icon i {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .link-icon:hover {
+      transform: scale(1.2);
+      background: rgba(0,255,255,0.2);
+    }
+
+    .link-icon span {
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .neuron-line {
+      position: absolute;
+      width: 2px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.2);
+      transform-origin: bottom center;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
     }
 
     .modal {
       display: none;
       position: fixed;
-      z-index: 99;
-      top: 0; left: 0;
+      z-index: 10;
+      left: 0;
+      top: 0;
       width: 100%;
       height: 100%;
+      overflow: auto;
       background-color: rgba(0,0,0,0.9);
     }
 
-    .modal-content {
-      margin: 5% auto;
-      display: block;
+    .modal-content img {
       max-width: 90vw;
-      border-radius: 12px;
+      max-height: 90vh;
+      display: block;
+      margin: 5% auto;
+      border-radius: 1rem;
     }
 
     .close {
       position: absolute;
       top: 20px;
       right: 35px;
-      color: white;
       font-size: 40px;
+      font-weight: bold;
+      color: white;
       cursor: pointer;
     }
 
-    .orbit {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      animation: spin 30s linear infinite;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    .lang-switch {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 10;
     }
 
-    .orbit a {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      text-align: center;
-      font-size: 20px;
+    .lang-switch button {
+      background: rgba(255,255,255,0.1);
       color: white;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.4);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.3s ease, background 0.3s ease;
-      text-decoration: none;
+      border: 1px solid white;
+      margin-left: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
     }
 
-    .orbit a:hover {
-      transform: scale(1.3);
-      background: rgba(0, 255, 255, 0.6);
-    }
-
-    .orbit a span {
-      font-size: 10px;
-      margin-top: 3px;
-      color: white;
-    }
-
-    .line {
-      position: absolute;
-      width: 1px;
-      height: 150px;
-      background: rgba(255,255,255,0.2);
-      top: 50%;
-      left: 50%;
-      transform-origin: bottom center;
-    }
-
-    @keyframes spin {
-      100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-      }
-    }
-
-    .item1  { transform: rotate(0deg) translate(150px) rotate(-0deg); }
-    .item2  { transform: rotate(45deg) translate(150px) rotate(-45deg); }
-    .item3  { transform: rotate(90deg) translate(150px) rotate(-90deg); }
-    .item4  { transform: rotate(135deg) translate(150px) rotate(-135deg); }
-    .item5  { transform: rotate(180deg) translate(150px) rotate(-180deg); }
-    .item6  { transform: rotate(225deg) translate(150px) rotate(-225deg); }
-    .item7  { transform: rotate(270deg) translate(150px) rotate(-270deg); }
-
-    .line1  { transform: rotate(0deg); }
-    .line2  { transform: rotate(45deg); }
-    .line3  { transform: rotate(90deg); }
-    .line4  { transform: rotate(135deg); }
-    .line5  { transform: rotate(180deg); }
-    .line6  { transform: rotate(225deg); }
-    .line7  { transform: rotate(270deg); }
-
-    @media (max-width: 600px) {
-      .orbit {
-        width: 240px;
-        height: 240px;
-      }
-      .orbit a {
-        width: 50px;
-        height: 50px;
-        font-size: 18px;
-      }
-      .orbit a span {
-        display: none;
-      }
+    .lang-switch button:hover {
+      background: rgba(0,255,255,0.2);
     }
   </style>
 </head>
 <body>
 
-  <!-- ВИДЕОФОН -->
-  <video autoplay muted loop id="bg-video">
-    <source src="background.mp4" type="video/mp4">
-  </video>
+<video autoplay muted loop class="bg-video">
+  <source src="background.mp4" type="video/mp4">
+</video>
 
-  <!-- ЦЕНТР -->
-  <div class="center">
-    <img src="photo.jpg" alt="Sergii Gerasymenko" class="profile-pic" id="profilePic">
+<div class="center-circle" id="profilePic">
+  <img src="photo.jpg" alt="Sergii Gerasymenko" />
+</div>
+
+<!-- Языковое переключение -->
+<div class="lang-switch">
+  <button onclick="window.open('https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE', '_blank')">EN</button>
+  <button onclick="window.open('https://docs.google.com/document/d/107SPPT9hzH90HV0BpCLM_RgeNrB3Y9raCsogWVi9bmM', '_blank')">UA</button>
+</div>
+
+<!-- Lines -->
+<script>
+  const totalIcons = 8;
+  for (let i = 0; i < totalIcons; i++) {
+    const line = document.createElement("div");
+    line.className = "neuron-line";
+    line.style.transform = `translate(-50%, -100%) rotate(${(360 / totalIcons) * i}deg)`;
+    document.body.appendChild(line);
+  }
+</script>
+
+<!-- Links -->
+<script>
+  const icons = [
+    { icon: "fas fa-file-alt", label: "Resume", link: "https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE" },
+    { icon: "fas fa-envelope", label: "Email", link: "mailto:amarystvk@gmail.com" },
+    { icon: "fab fa-telegram", label: "Telegram", link: "https://t.me/undead_tvk" },
+    { icon: "fab fa-linkedin", label: "LinkedIn", link: "https://www.linkedin.com/in/sergey-gerasimenko-0836a7173/" },
+    { icon: "fab fa-instagram", label: "Instagram", link: "https://www.instagram.com/undeadtvk" },
+    { icon: "fab fa-viber", label: "Viber", link: "viber://chat?number=%2B380634105441" },
+    { icon: "fab fa-whatsapp", label: "WhatsApp", link: "https://wa.me/380634105441" },
+    { icon: "fas fa-globe", label: "UA Resume", link: "https://docs.google.com/document/d/107SPPT9hzH90HV0BpCLM_RgeNrB3Y9raCsogWVi9bmM" }
+  ];
+
+  icons.forEach((item, i) => {
+    const el = document.createElement("a");
+    el.href = item.link;
+    el.className = "link-icon";
+    el.style.transform = `translate(-50%, -50%) rotate(${(360 / icons.length) * i}deg) translate(180px) rotate(-${(360 / icons.length) * i}deg)`;
+    el.target = "_blank";
+    el.innerHTML = `<i class="${item.icon}"></i><span>${item.label}</span>`;
+    document.body.appendChild(el);
+  });
+</script>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
+  <div class="modal-content">
+    <img src="photo.jpg" alt="Sergii Gerasymenko Large View">
   </div>
+</div>
 
-  <!-- ОРБИТА -->
-  <div class="orbit">
-    <a href="https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE" target="_blank" class="item1">
-      <i class="fas fa-file-alt"></i><span>Resume</span>
-    </a>
-    <a href="mailto:amarystvk@gmail.com" class="item2">
-      <i class="fas fa-envelope"></i><span>Email</span>
-    </a>
-    <a href="https://t.me/undead_tvk" target="_blank" class="item3">
-      <i class="fab fa-telegram"></i><span>Telegram</span>
-    </a>
-    <a href="https://www.linkedin.com/in/sergey-gerasimenko-0836a7173/" target="_blank" class="item4">
-      <i class="fab fa-linkedin"></i><span>LinkedIn</span>
-    </a>
-    <a href="https://www.instagram.com/undeadtvk" target="_blank" class="item5">
-      <i class="fab fa-instagram"></i><span>Instagram</span>
-    </a>
-    <a href="viber://chat?number=%2B380634105441" class="item6">
-      <i class="fab fa-viber"></i><span>Viber</span>
-    </a>
-    <a href="https://wa.me/380634105441" class="item7">
-      <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
-    </a>
-  </div>
-
-  <!-- НЕЙРОННЫЕ ЛИНИИ -->
-  <div class="line line1"></div>
-  <div class="line line2"></div>
-  <div class="line line3"></div>
-  <div class="line line4"></div>
-  <div class="line line5"></div>
-  <div class="line line6"></div>
-  <div class="line line7"></div>
-
-  <!-- МОДАЛКА -->
-  <div id="modal" class="modal">
-    <span class="close" onclick="modal.style.display='none'">&times;</span>
-    <img class="modal-content" src="photo.jpg" alt="Sergii Gerasymenko Full View">
-  </div>
-
-  <script>
-    const profilePic = document.getElementById('profilePic');
-    const modal = document.getElementById('modal');
-    profilePic.onclick = () => { modal.style.display = 'block'; }
-    window.onclick = (event) => {
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
-    };
-  </script>
+<script>
+  const profilePic = document.getElementById('profilePic');
+  const modal = document.getElementById('modal');
+  profilePic.addEventListener('click', () => {
+    modal.style.display = 'block';
+  });
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  };
+</script>
 
 </body>
 </html>

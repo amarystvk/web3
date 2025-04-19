@@ -1,21 +1,46 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sergii Gerasymenko</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
-      background: #000;
-      color: #fff;
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    video.bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+      background-size: 30px 30px;
+      z-index: 0;
+      opacity: 0.2;
+    }
+    * {
+      z-index: 1;
+      position: relative;
+    }
+    .container {
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem;
-      overflow-x: hidden;
     }
     img {
       border-radius: 50%;
@@ -30,17 +55,142 @@
       transform: scale(1.05);
     }
     h1 {
-      margin: 0;
       font-size: 1.8rem;
+      margin: 0.5rem 0;
     }
     p {
-      text-align: center;
       max-width: 400px;
-      margin-top: 0.5rem;
       margin-bottom: 1.5rem;
+    }
+    .lang-switch {
+      margin-bottom: 1.5rem;
+    }
+    .lang-switch button {
+      margin: 0 0.3rem;
+      background: #111;
+      color: #fff;
+      border: 1px solid #444;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+    }
+    .lang-switch button:hover {
+      background: #222;
+    }
+    .content {
+      display: none;
+    }
+    .content.active {
+      display: block;
     }
     .icon-links {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.8
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .icon-links a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+      color: white;
+      text-decoration: none;
+    }
+    .icon-links i {
+      font-size: 1.5rem;
+    }
+    .icon-links a:hover {
+      color: #00ffff;
+      transform: scale(1.05);
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 1rem;
+    }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="background.mp4" type="video/mp4">
+  </video>
+
+  <div class="container">
+    <img id="profilePic" src="photo.jpg" alt="Sergii Gerasymenko">
+    <h1>Sergii Gerasymenko</h1>
+
+    <div class="lang-switch">
+      <button onclick="switchLang('en')">EN</button>
+      <button onclick="switchLang('ua')">UA</button>
+    </div>
+
+    <div id="en" class="content active">
+      <p>AI | Logistics | Web3 Integrator<br/>10+ years of global execution in tech, trade, and automation.</p>
+      <div class="icon-links">
+        <a href="https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE" target="_blank"><i class="fas fa-file-alt"></i> Resume (EN)</a>
+        <a href="mailto:amarystvk@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+        <a href="https://t.me/undead_tvk" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+        <a href="https://wa.me/380634105441" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="viber://chat?number=+380634105441" target="_blank"><i class="fab fa-viber"></i> Viber</a>
+        <a href="https://www.linkedin.com/in/sergey-gerasimenko-0836a7173/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="https://www.instagram.com/undeadtvk" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      </div>
+    </div>
+
+    <div id="ua" class="content">
+      <p>AI | Логістика | Інтегратор Web3<br/>10+ років досвіду у сфері технологій, торгівлі та автоматизації.</p>
+      <div class="icon-links">
+        <a href="https://docs.google.com/document/d/107SPPT9hzH90HV0BpCLM_RgeNrB3Y9raCsogWVi9bmM" target="_blank"><i class="fas fa-file-alt"></i> Резюме (UA)</a>
+        <a href="mailto:amarystvk@gmail.com"><i class="fas fa-envelope"></i> Пошта</a>
+        <a href="https://t.me/undead_tvk" target="_blank"><i class="fab fa-telegram"></i> Телеграм</a>
+        <a href="https://wa.me/380634105441" target="_blank"><i class="fab fa-whatsapp"></i> Ватсап</a>
+        <a href="viber://chat?number=+380634105441" target="_blank"><i class="fab fa-viber"></i> Вайбер</a>
+        <a href="https://www.linkedin.com/in/sergey-gerasimenko-0836a7173/" target="_blank"><i class="fab fa-linkedin"></i> Лінкедін</a>
+        <a href="https://www.instagram.com/undeadtvk" target="_blank"><i class="fab fa-instagram"></i> Інстаграм</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
+    <div class="modal-content">
+      <img src="photo.jpg" alt="Full Size Photo">
+    </div>
+  </div>
+
+  <script>
+    const profilePic = document.getElementById('profilePic');
+    const modal = document.getElementById('modal');
+    profilePic.onclick = () => modal.style.display = 'flex';
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    };
+    function switchLang(lang) {
+      document.querySelectorAll('.content').forEach(div => div.classList.remove('active'));
+      document.getElementById(lang).classList.add('active');
+    }
+  </script>
+</body>
+</html>

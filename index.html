@@ -4,15 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sergii Gerasymenko | Web3</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    body {
-      margin: 0;
-      background: url('background.mp4') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Segoe UI', sans-serif;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
       overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
       color: white;
+    }
+
+    /* Фон-видео */
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      object-fit: cover;
+      z-index: -1;
     }
 
     .center {
@@ -40,8 +48,7 @@
       display: none;
       position: fixed;
       z-index: 99;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       background-color: rgba(0,0,0,0.9);
@@ -65,10 +72,10 @@
 
     .orbit {
       position: absolute;
-      width: 320px;
-      height: 320px;
+      width: 300px;
+      height: 300px;
       border-radius: 50%;
-      animation: spin 25s linear infinite;
+      animation: spin 30s linear infinite;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -79,7 +86,7 @@
       width: 60px;
       height: 60px;
       text-align: center;
-      font-size: 22px;
+      font-size: 20px;
       color: white;
       border-radius: 50%;
       background: rgba(0,0,0,0.4);
@@ -105,7 +112,7 @@
     .line {
       position: absolute;
       width: 1px;
-      height: 160px;
+      height: 150px;
       background: rgba(255,255,255,0.2);
       top: 50%;
       left: 50%;
@@ -118,14 +125,13 @@
       }
     }
 
-    /* Иконки по кругу */
-    .item1  { transform: rotate(0deg) translate(160px) rotate(0deg); }
-    .item2  { transform: rotate(45deg) translate(160px) rotate(-45deg); }
-    .item3  { transform: rotate(90deg) translate(160px) rotate(-90deg); }
-    .item4  { transform: rotate(135deg) translate(160px) rotate(-135deg); }
-    .item5  { transform: rotate(180deg) translate(160px) rotate(-180deg); }
-    .item6  { transform: rotate(225deg) translate(160px) rotate(-225deg); }
-    .item7  { transform: rotate(270deg) translate(160px) rotate(-270deg); }
+    .item1  { transform: rotate(0deg) translate(150px) rotate(-0deg); }
+    .item2  { transform: rotate(45deg) translate(150px) rotate(-45deg); }
+    .item3  { transform: rotate(90deg) translate(150px) rotate(-90deg); }
+    .item4  { transform: rotate(135deg) translate(150px) rotate(-135deg); }
+    .item5  { transform: rotate(180deg) translate(150px) rotate(-180deg); }
+    .item6  { transform: rotate(225deg) translate(150px) rotate(-225deg); }
+    .item7  { transform: rotate(270deg) translate(150px) rotate(-270deg); }
 
     .line1  { transform: rotate(0deg); }
     .line2  { transform: rotate(45deg); }
@@ -153,12 +159,17 @@
 </head>
 <body>
 
-  <!-- Центр -->
+  <!-- ВИДЕОФОН -->
+  <video autoplay muted loop id="bg-video">
+    <source src="background.mp4" type="video/mp4">
+  </video>
+
+  <!-- ЦЕНТР -->
   <div class="center">
     <img src="photo.jpg" alt="Sergii Gerasymenko" class="profile-pic" id="profilePic">
   </div>
 
-  <!-- Окружность -->
+  <!-- ОРБИТА -->
   <div class="orbit">
     <a href="https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE" target="_blank" class="item1">
       <i class="fas fa-file-alt"></i><span>Resume</span>
@@ -183,7 +194,7 @@
     </a>
   </div>
 
-  <!-- Линии -->
+  <!-- НЕЙРОННЫЕ ЛИНИИ -->
   <div class="line line1"></div>
   <div class="line line2"></div>
   <div class="line line3"></div>
@@ -192,7 +203,7 @@
   <div class="line line6"></div>
   <div class="line line7"></div>
 
-  <!-- Модалка -->
+  <!-- МОДАЛКА -->
   <div id="modal" class="modal">
     <span class="close" onclick="modal.style.display='none'">&times;</span>
     <img class="modal-content" src="photo.jpg" alt="Sergii Gerasymenko Full View">

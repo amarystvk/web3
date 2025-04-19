@@ -6,194 +6,202 @@
   <title>Sergii Gerasymenko</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #000;
-      color: white;
+      background: black;
       overflow: hidden;
+      color: white;
     }
-    video#bgVideo {
+    video.bg-video {
       position: fixed;
-      right: 0;
-      bottom: 0;
-      min-width: 100%;
-      min-height: 100%;
-      z-index: -1;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
       object-fit: cover;
+      z-index: -2;
     }
-    .language-switch {
+    .lang-switch {
       position: absolute;
       top: 20px;
       right: 20px;
-      display: flex;
-      gap: 10px;
-      z-index: 2;
+      z-index: 10;
     }
-    .language-switch button {
+    .lang-switch button {
       background: rgba(0,0,0,0.5);
       color: white;
-      border: 1px solid #fff;
-      padding: 5px 10px;
+      border: 1px solid #555;
+      padding: 6px 12px;
+      margin: 0 4px;
       cursor: pointer;
     }
+    .lang-switch button:hover {
+      background: rgba(255,255,255,0.1);
+    }
 
-    .center {
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    .center-wrapper {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      text-align: center;
+      z-index: 2;
     }
-    .profile-pic {
-      width: 160px;
-      height: 160px;
+    .center-image {
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
-      border: 4px solid white;
+      border: 3px solid white;
+      object-fit: cover;
       cursor: pointer;
+      transition: transform 0.3s;
     }
-    .orbit {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 320px;
-      height: 320px;
-      margin-left: -160px;
-      margin-top: -160px;
-      animation: rotate 20s linear infinite;
-    }
-    .orbit a {
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 64px;
-      height: 64px;
-      background: rgba(255,255,255,0.1);
-      color: white;
-      border-radius: 50%;
-      font-size: 18px;
-      text-decoration: none;
-      transition: transform 0.3s, background 0.3s;
-    }
-    .orbit a:hover {
-      transform: scale(1.2);
-      background: rgba(255,255,255,0.3);
-    }
-    .orbit a span {
-      margin-top: 4px;
-      font-size: 11px;
+    .center-image:hover {
+      transform: scale(1.05);
     }
 
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .icon-orbit {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      transition: 0.3s;
+    }
+    .icon-orbit:hover {
+      color: #00ffff;
+      transform: scale(1.2);
+      box-shadow: 0 0 12px #00ffff;
+    }
+    .tooltip {
+      position: absolute;
+      bottom: -22px;
+      font-size: 0.7rem;
+      color: #ccc;
+      white-space: nowrap;
+    }
+
+    svg.lines {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      z-index: 1;
+      pointer-events: none;
     }
 
     .modal {
       display: none;
       position: fixed;
-      z-index: 5;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.8);
+      z-index: 20;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
     }
-    .modal-content {
-      margin: 5% auto;
-      display: block;
-      max-width: 90%;
-      border-radius: 12px;
+    .modal img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 1rem;
     }
-    .close {
+    .modal .close {
       position: absolute;
       top: 20px;
-      right: 40px;
+      right: 30px;
+      font-size: 2rem;
       color: white;
-      font-size: 40px;
-      font-weight: bold;
       cursor: pointer;
-    }
-
-    .lines {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 320px; height: 320px;
-      margin-left: -160px;
-      margin-top: -160px;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .lines::before, .lines::after {
-      content: '';
-      position: absolute;
-      width: 1px;
-      height: 320px;
-      background: rgba(255,255,255,0.1);
-      left: 50%;
-      top: 0;
-    }
-    .lines::after {
-      transform: rotate(90deg);
-      transform-origin: center;
     }
   </style>
 </head>
 <body>
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="background.mp4" type="video/mp4">
+  </video>
 
-<video autoplay muted loop id="bgVideo">
-  <source src="background.mp4" type="video/mp4">
-</video>
+  <div class="lang-switch">
+    <button onclick="switchLang('en')">EN</button>
+    <button onclick="switchLang('ua')">UA</button>
+  </div>
 
-<div class="language-switch">
-  <button onclick="switchLang('en')">EN</button>
-  <button onclick="switchLang('ua')">UA</button>
-</div>
+  <div class="scene">
+    <!-- Lines -->
+    <svg class="lines">
+      <line x1="50%" y1="50%" x2="25%" y2="25%" stroke="white" stroke-opacity="0.1"/>
+      <line x1="50%" y1="50%" x2="75%" y2="25%" stroke="white" stroke-opacity="0.1"/>
+      <line x1="50%" y1="50%" x2="90%" y2="50%" stroke="white" stroke-opacity="0.1"/>
+      <line x1="50%" y1="50%" x2="75%" y2="75%" stroke="white" stroke-opacity="0.1"/>
+      <line x1="50%" y1="50%" x2="25%" y2="75%" stroke="white" stroke-opacity="0.1"/>
+      <line x1="50%" y1="50%" x2="10%" y2="50%" stroke="white" stroke-opacity="0.1"/>
+      <line x1="50%" y1="50%" x2="50%" y2="10%" stroke="white" stroke-opacity="0.1"/>
+    </svg>
 
-<div class="center">
-  <img src="photo.jpg" class="profile-pic" id="profilePic" alt="Profile" onclick="openModal()">
-</div>
+    <!-- Center -->
+    <div class="center-wrapper">
+      <img id="profilePic" src="photo.jpg" class="center-image" />
+    </div>
 
-<div class="orbit" id="iconOrbit">
-  <a id="resumeLink" href="https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE" target="_blank">
-    <i class="fas fa-file-alt"></i><span id="resumeText">Resume</span>
-  </a>
-  <a href="mailto:amarystvk@gmail.com"><i class="fas fa-envelope"></i><span>Email</span></a>
-  <a href="https://t.me/undead_tvk" target="_blank"><i class="fab fa-telegram"></i><span>Telegram</span></a>
-  <a href="https://www.instagram.com/undeadtvk" target="_blank"><i class="fab fa-instagram"></i><span>Instagram</span></a>
-  <a href="https://www.linkedin.com/in/sergey-gerasimenko-0836a7173/" target="_blank"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
-  <a href="https://wa.me/380634105441" target="_blank"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
-  <a href="viber://chat?number=+380634105441"><i class="fab fa-viber"></i><span>Viber</span></a>
-</div>
+    <!-- Icons (Static layout) -->
+    <a class="icon-orbit" id="resumeLink" href="https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE" target="_blank" style="top: 5%; left: 50%;">
+      <i class="fas fa-file-alt"></i><div class="tooltip">Resume</div>
+    </a>
+    <a class="icon-orbit" href="https://t.me/undead_tvk" target="_blank" style="top: 20%; left: 15%;">
+      <i class="fab fa-telegram"></i><div class="tooltip">Telegram</div>
+    </a>
+    <a class="icon-orbit" href="mailto:amarystvk@gmail.com" style="top: 20%; left: 85%;">
+      <i class="fas fa-envelope"></i><div class="tooltip">Email</div>
+    </a>
+    <a class="icon-orbit" href="https://www.instagram.com/undeadtvk" target="_blank" style="top: 55%; left: 90%;">
+      <i class="fab fa-instagram"></i><div class="tooltip">Instagram</div>
+    </a>
+    <a class="icon-orbit" href="https://www.linkedin.com/in/sergey-gerasimenko-0836a7173/" target="_blank" style="top: 80%; left: 70%;">
+      <i class="fab fa-linkedin"></i><div class="tooltip">LinkedIn</div>
+    </a>
+    <a class="icon-orbit" href="https://wa.me/380634105441" target="_blank" style="top: 80%; left: 30%;">
+      <i class="fab fa-whatsapp"></i><div class="tooltip">WhatsApp</div>
+    </a>
+    <a class="icon-orbit" href="viber://chat?number=+380634105441" style="top: 55%; left: 10%;">
+      <i class="fab fa-viber"></i><div class="tooltip">Viber</div>
+    </a>
+  </div>
 
-<div class="lines"></div>
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
+    <img src="photo.jpg" alt="Full Photo">
+  </div>
 
-<div id="modal" class="modal" onclick="closeModal()">
-  <span class="close" onclick="closeModal()">&times;</span>
-  <img class="modal-content" id="modalImg" src="photo.jpg" alt="Full">
-</div>
-
-<script>
-  function openModal() {
-    document.getElementById("modal").style.display = "block";
-  }
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-  }
-
-  function switchLang(lang) {
-    const resumeLink = document.getElementById("resumeLink");
-    const resumeText = document.getElementById("resumeText");
-
-    if (lang === "ua") {
-      resumeText.innerText = "Резюме";
-      resumeLink.href = "https://docs.google.com/document/d/107SPPT9hzH90HV0BpCLM_RgeNrB3Y9raCsogWVi9bmM";
-    } else {
-      resumeText.innerText = "Resume";
-      resumeLink.href = "https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE";
+  <script>
+    const resumeLink = document.getElementById('resumeLink');
+    function switchLang(lang) {
+      if (lang === 'en') {
+        resumeLink.href = "https://docs.google.com/document/d/1TwQRM06WgpTQRwQOhzbhVhfTwfUEVjqtKM_ABpXcCbE";
+        resumeLink.querySelector('.tooltip').textContent = "Resume";
+      } else {
+        resumeLink.href = "https://docs.google.com/document/d/107SPPT9hzH90HV0BpCLM_RgeNrB3Y9raCsogWVi9bmM";
+        resumeLink.querySelector('.tooltip').textContent = "Резюме";
+      }
     }
-  }
-</script>
 
+    document.getElementById('profilePic').onclick = () => {
+      document.getElementById('modal').style.display = 'flex';
+    };
+    window.onclick = (e) => {
+      if (e.target === document.getElementById('modal')) {
+        document.getElementById('modal').style.display = 'none';
+      }
+    };
+  </script>
 </body>
 </html>
